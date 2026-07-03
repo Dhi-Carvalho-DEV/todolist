@@ -106,6 +106,11 @@
             </article>
 
             <article class="summary-card">
+              <span class="summary-number" id="favorites-count">0</span>
+              <span class="summary-label">Favoritas</span>
+            </article>
+
+            <article class="summary-card">
               <span class="summary-number" id="hours-count">0h</span>
               <span class="summary-label">Horas Planejadas</span>
             </article>
@@ -121,12 +126,26 @@
             </article>
           </section>
 
+          <section class="progress-card">
+            <div class="progress-header">
+              <span>Progresso Geral</span>
+              <span id="progress-text">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div id="progress-fill" class="progress-fill"></div>
+            </div>
+          </section>
+
           <!-- AÇÕES -->
           <section class="agenda-toolbar">
-            <button id="today-btn" class="today-btn">Hoje</button>
-            <button id="clear-filter-btn" class="secondary-btn">
-              Mostrar Todas
-            </button>
+            <div class="agenda-filters">
+              <button data-filter="all">Todas</button>
+              <button data-filter="pending">Pendentes</button>
+              <button data-filter="completed">Concluídas</button>
+              <button data-filter="overdue">Atrasadas</button>
+              <button data-filter="high">Alta Prioridade</button>
+              <button data-filter="today">Hoje</button>
+            </div>
             <div class="search-box">
               <i class="bi bi-search"></i>
               <input type="text" placeholder="Pesquisar tarefa..." />
@@ -149,7 +168,29 @@
             <!-- SIDEBAR -->
             <aside class="agenda-sidebar">
               <div class="calendar-card">
-                <h3 id="month-year">Junho 2026</h3>
+                <div class="calendar-header">
+                  <button id="prev-month" class="calendar-nav-btn">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+
+                  <div class="calendar-title">
+                    <span class="calendar-label">Agenda</span>
+                    <h3 id="month-year"></h3>
+                  </div>
+
+                  <button id="next-month" class="calendar-nav-btn">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="calendar-weekdays">
+                  <span>Dom</span>
+                  <span>Seg</span>
+                  <span>Ter</span>
+                  <span>Qua</span>
+                  <span>Qui</span>
+                  <span>Sex</span>
+                  <span>Sáb</span>
+                </div>
                 <div id="calendar-grid"></div>
               </div>
 
@@ -181,6 +222,26 @@
         <i class="bi bi-gear"></i>
       </a>
     </nav>
+
+    <div id="task-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Detalhes da Tarefa</h3>
+          <button id="close-task-modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div id="task-details"></div>
+        <div class="modal-actions">
+          <button id="complete-task-btn">Concluir</button>
+          <button id="delete-task-btn">Excluir</button>
+        </div>
+      </div>
+    </div>
+    <div id="toast" class="toast">
+      <i id="toast-icon" class="bi"></i>
+      <span id="toast-message"></span>
+    </div>
 
     <script src="./js/app.js"></script>
     <script src="./js/agenda.js"></script>
