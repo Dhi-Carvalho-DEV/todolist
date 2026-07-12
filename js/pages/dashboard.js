@@ -38,7 +38,7 @@ const categories = [
 
 /* Estatísticas */
 function updateDashboardStats() {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const tasks = StorageService.get("tasks", []);
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((task) => task.completed).length;
@@ -52,7 +52,7 @@ function updateDashboardStats() {
 
 /* Renderizar Quadros */
 function renderBoards() {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const tasks = StorageService.get("tasks", []);
 
   boardsGrid.innerHTML = "";
 

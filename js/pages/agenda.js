@@ -25,11 +25,6 @@ const closeTaskModal = document.querySelector("#close-task-modal");
 const completeTaskBtn = document.querySelector("#complete-task-btn");
 const deleteTaskBtn = document.querySelector("#delete-task-btn");
 
-/* ELEMENTOS DO TOAST */
-const toast = document.querySelector("#toast");
-const toastIcon = document.querySelector("#toast-icon");
-const toastMessage = document.querySelector("#toast-message");
-
 /* DADOS */
 let searchTerm = "";
 let selectedDate = null;
@@ -107,28 +102,8 @@ searchInput?.addEventListener("input", (event) => {
   renderTasks();
 });
 
-/* HELPERS */
-function getCategoryLabel(category) {
-  switch (category) {
-    case "study":
-      return "Estudos";
-
-    case "work":
-      return "Trabalho";
-
-    case "home":
-      return "Casa";
-
-    case "finance":
-      return "Finanças";
-
-    default:
-      return "Outros";
-  }
-}
-
 function getTasks() {
-  return JSON.parse(localStorage.getItem("tasks")) || [];
+  return StorageService.get("tasks", []);
 }
 
 function filterTasks(tasks) {
@@ -155,41 +130,6 @@ function filterTasks(tasks) {
     default:
       return tasks;
   }
-}
-
-function formatDate(date) {
-  if (!date) return "Sem prazo";
-  const [year, month, day] = date.split("-");
-
-  return `${day}/${month}/${year}`;
-}
-
-function showToast(message, type = "success") {
-  toast.className = `toast ${type}`;
-
-  switch (type) {
-    case "success":
-      toastIcon.className = "bi bi-check-circle-fill";
-      break;
-
-    case "warning":
-      toastIcon.className = "bi bi-exclamation-triangle-fill";
-      break;
-
-    case "error":
-      toastIcon.className = "bi bi-x-circle-fill";
-      break;
-
-    default:
-      toastIcon.className = "bi bi-info-circle-fill";
-  }
-
-  toastMessage.textContent = message;
-  toast.classList.add("show");
-  clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 3000);
 }
 
 /* LISTA DE TAREFAS */
@@ -571,7 +511,7 @@ document.addEventListener("change", (e) => {
     task.completed ? "success" : "info",
   );
 
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  StorageService.set("tasks", tasks);
 
   updateSummary();
   renderTasks();
@@ -590,7 +530,7 @@ document.addEventListener("click", (e) => {
   if (!task) return;
 
   task.favorite = !task.favorite;
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  StorageService.set("tasks", tasks);
 
   showToast(
     task.favorite ? "Tarefa adicionada aos favoritos." : "Favorito removido.",
@@ -641,7 +581,7 @@ completeTaskBtn?.addEventListener("click", () => {
     showToast("Esta tarefa já está concluída.", "info");
     return;
   }
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  StorageService.set("tasks", tasks);
   taskModal.classList.add("hidden");
   showToast("Tarefa concluída com sucesso!");
 
@@ -658,7 +598,7 @@ deleteTaskBtn?.addEventListener("click", () => {
 
   const tasks = getTasks().filter((task) => task.id !== selectedTaskId);
 
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  StorageService.set("tasks", tasks);
   taskModal.classList.add("hidden");
   showToast("Tarefa removida.", "warning");
 

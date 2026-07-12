@@ -24,7 +24,7 @@ const taskStartTimeInput = document.querySelector("#task-start-time");
 const taskEndTimeInput = document.querySelector("#task-end-time");
 
 /* Estado */
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let tasks = StorageService.get("tasks", []);
 let editingTaskId = null;
 let currentFilter = "all";
 let searchTerm = "";
@@ -100,7 +100,7 @@ taskModal?.addEventListener("click", (event) => {
 /* Local Storage */
 
 function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  StorageService.set("tasks", tasks);
 }
 
 /* Resumo */

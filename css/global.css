@@ -296,3 +296,48 @@ ol {
     overflow-x: hidden;
   }
 }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #222;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transform: translateX(150%);
+  opacity: 0;
+  transition: 0.35s;
+  z-index: 9999;
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast.sucess {
+  background: #16a34a;
+}
+
+.toast.warning {
+  background: #d97706;
+}
+
+.toast.error {
+  background: #dc2626;
+}
+
+.toast.info {
+  background: #2563eb;
+}
+
+.toast i {
+  font-size: 1.2rem;
+}
