@@ -1,28 +1,31 @@
-const StorageService = {
-  get(key, defaultValue = null) {
-    const data = localStorage.getItem(key);
+/**
+ * Serviço central de armazenameento
+ * Responsável por controlar o localStorage da aplicação
+ */
 
-    if (!data) {
-      return defaultValue;
-    }
+export function saveData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
 
-    try {
-      return JSON.parse(data);
-    } catch (error) {
-      console.error(`Erro ao ler ${key}`, error);
-      return defaultValue;
-    }
-  },
+export function getData(key, fallback = null) {
+  const data = localStorage.getItem(key);
 
-  set(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-  },
+  if (!data) {
+    return fallback;
+  }
 
-  remove(key) {
-    localStorage.removeItem(key);
-  },
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(`Erro ao ler ${key}`, error);
+    return fallback;
+  }
+}
 
-  clear() {
-    localStorage.clear();
-  },
-};
+export function removeData(key) {
+  localStorage.removeItem(key);
+}
+
+export function clearStorage() {
+  localStorage.clear();
+}

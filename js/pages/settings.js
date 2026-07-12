@@ -1,3 +1,5 @@
+import { getData, saveData } from "../services/storage.js";
+
 const defaultProfile = {
   name: "Diogo Santana de Carvalho",
   email: "diogo@example.com",
@@ -29,7 +31,10 @@ menuItems.forEach((item) => {
 });
 
 function loadProfile() {
-  const profile = JSON.parse(localStorage.getItem("profile")) || defaultProfile;
+  const profile = {
+    ...defaultProfile,
+    ...getData("profile", {}),
+  };
 
   userName.value = profile.name;
   userEmail.value = profile.email;
@@ -44,7 +49,7 @@ saveProfile?.addEventListener("click", () => {
     role: userRole.value,
     avatar: profileImage.src,
   };
-  localStorage.setItem("profile", JSON.stringify(profile));
+  saveData("profile", profile);
   showToast("Perfil atualizado!", "success");
 });
 
